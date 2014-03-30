@@ -4,6 +4,8 @@ package br.pereira.testes;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -55,29 +57,36 @@ public class Teste extends JFrame {
 		int w = imgIn.getWidth();
 		int h = imgIn.getHeight();
 		double radiano = Math.toRadians( ang );
-		
-		
-		Color corBranco = new Color( 255, 255, 255 );
-		BufferedImage imgOut = new BufferedImage( w, h, imgIn.getType() );
+
+	    // Rotate about the input image's centre
+	    AffineTransform transforma = AffineTransform.getRotateInstance( radiano, w/2, h/2 );
+	    Shape retang = new Rectangle( w, h );
+
+	    // Work out how big the rotated image would be..
+	    Rectangle redimens = transforma.createTransformedShape( retang ).getBounds();
+	    
+	    int novoW = redimens.width;
+	    int novoH = redimens.height;
+
+	    AffineTransform reposiciona = AffineTransform.getTranslateInstance( (novoW-w)/2, (novoH-h)/2 );
+	    transforma.preConcatenate( reposiciona );
+	    
+	    
+		BufferedImage imgOut = new BufferedImage( novoW, novoH, imgIn.getType() );
 		Graphics2D gOut = imgOut.createGraphics();
-		gOut.setBackground( corBranco );
-		gOut.rotate( radiano, w/2, h/2 );
-		gOut.drawImage( imgIn, null, 0, 0 );
+		gOut.setColor( Color.WHITE );
+		gOut.fillRect( 0, 0, novoW, novoH );
+	    //gOut.rotate( radiano, novoW/2, novoH/2 );
+	    //gOut.drawImage( imgIn, null, 0, 0 );
+		gOut.drawImage( imgIn,transforma, null );
+
 		return imgOut;
 	}
 
-/*
-int w = img.getWidth();  
-int h = img.getHeight();  
-BufferedImage newImage = new BufferedImage(width, height, img.getType());
-    Graphics2D g2 = newImage.createGraphics();
-    g2.rotate(Math.toRadians(rotation), w/2, h/2);  
-    g2.drawImage(img,null,0,0);
-return newImage;   */
 	
 	
 /*
- *  public BufferedImage doRotate(BufferedImage input, int angle) {
+	public BufferedImage doRotate(BufferedImage input, int angle) {
     int width = input.getWidth();
     int height = input.getHeight();
 
