@@ -15,6 +15,7 @@ import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
@@ -48,6 +49,9 @@ public class Teste extends JFrame {
 		
 		int lateral[] = new int[imgIn.getHeight()];
 		int abaixo[] = new int[imgIn.getWidth()];
+		Arrays.fill( lateral, 0 );
+		Arrays.fill( abaixo,  0 );
+		
 		Raster  rIn = imgIn.getRaster();
 		int pixel[] = new int[ rIn.getNumBands() ];
 
@@ -55,10 +59,18 @@ public class Teste extends JFrame {
 			for( int w=0; w<imgIn.getWidth(); w++ ) {
 				pixel = rIn.getPixel( w, h, pixel );
 
+				// caso o pixel for qualquer coisa diferente de preto, faz próxima interação
+				if( pixel[0]!=0 || pixel[1]!=0 || pixel[2]!=0 )
+					continue;
+
+				//se for preto, faz os cálculos...
 				lateral[ h ] = lateral[ h ] + 1;
 				abaixo[ w ] = abaixo[ w ] + 1;
 			}
 		}
+		int aa;
+		aa = 0;
+		aa++;
 	}
 	
 	public void clickRotate() {
