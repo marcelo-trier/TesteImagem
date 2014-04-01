@@ -43,6 +43,24 @@ public class Teste extends JFrame {
 		});
 	}
 
+	public void clickVerifiqueRotacao() {
+		BufferedImage imgIn = getImage();
+		
+		int lateral[] = new int[imgIn.getHeight()];
+		int abaixo[] = new int[imgIn.getWidth()];
+		Raster  rIn = imgIn.getRaster();
+		int pixel[] = new int[ rIn.getNumBands() ];
+
+		for( int h=0; h<imgIn.getHeight(); h++ ) {
+			for( int w=0; w<imgIn.getWidth(); w++ ) {
+				pixel = rIn.getPixel( w, h, pixel );
+
+				lateral[ h ] = lateral[ h ] + 1;
+				abaixo[ w ] = abaixo[ w ] + 1;
+			}
+		}
+	}
+	
 	public void clickRotate() {
 		String aa = JOptionPane.showInputDialog( "Digite angulo" );
 		int angulo = Integer.parseInt( aa );
@@ -427,6 +445,17 @@ public class Teste extends JFrame {
 			}
 		});
 		mnImagens.add(mntmRotate);
+		
+		JMenu mnProcessamento = new JMenu("Processamento");
+		menuBar.add(mnProcessamento);
+		
+		JMenuItem mntmVerifiqueRotao = new JMenuItem("Verifique rotação");
+		mntmVerifiqueRotao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickVerifiqueRotacao();
+			}
+		});
+		mnProcessamento.add(mntmVerifiqueRotao);
 		contentPane = new JDesktopPane();
 		contentPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
