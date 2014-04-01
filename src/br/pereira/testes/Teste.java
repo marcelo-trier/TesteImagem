@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
@@ -57,8 +58,8 @@ public class Teste extends JFrame {
 		int w = imgIn.getWidth();
 		int h = imgIn.getHeight();
 		double radiano = Math.toRadians( ang );
-
-	    // Rotate about the input image's centre
+	
+		// Rotate about the input image's centre
 	    AffineTransform transforma = AffineTransform.getRotateInstance( radiano, w/2, h/2 );
 	    Shape retang = new Rectangle( w, h );
 
@@ -122,6 +123,34 @@ public class Teste extends JFrame {
 }
  * 	
  */
+
+	public void processaPixels( PixelManager pxm ) {
+		BufferedImage imgIn = getImage();
+		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
+		Raster  rIn = imgIn.getRaster();
+		WritableRaster rOut = imgOut.getRaster();
+		
+		int pixel[] = new int[ rIn.getNumBands() ];
+
+		for( int h=0; h<imgIn.getHeight(); h++ ) {
+			for( int w=0; w<imgIn.getWidth(); w++ ) {
+				pxm.execute();
+/*
+				pixel = rIn.getPixel( w, h, pixel );
+				int media = (pixel[0]+pixel[1]+pixel[2])/3;
+				int cor = 0;
+				if( media > limite ) {
+					cor = 0xFF;
+				}
+				pixel[0] = pixel[1] = pixel[2] = cor;
+					
+				rOut.setPixel( w, h, pixel ); */
+			}
+		}
+		TelaInterna interno = new TelaInterna( imgOut );
+		contentPane.add( interno );
+		interno.setVisible( true );		
+	}
 	
 	public void clickLimiar() {
 		String aa = JOptionPane.showInputDialog( "Digite limiar" );
@@ -288,8 +317,27 @@ public class Teste extends JFrame {
 	}
 
 	
-	public void clickOnLoad() throws Exception {
+	public void clickSave() throws IOException {
 		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogType( JFileChooser.SAVE_DIALOG );
+		File umDir = new File( System.getProperty( "user.dir" ) );
+		fileChooser.setCurrentDirectory( umDir );
+		if( fileChooser.showSaveDialog( this ) != JFileChooser.APPROVE_OPTION ) {
+			return;
+		}
+		File salvar = fileChooser.getSelectedFile();
+		//ImageIO.w
+		BufferedImage img = getImage();
+		ImageIO.write( img, "bmp", salvar );
+	}
+
+	
+	public void clickOnLoad() throws Exception {
+		
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogType( JFileChooser.OPEN_DIALOG );
+		File umDir = new File( System.getProperty( "user.dir" ) );
+		fileChooser.setCurrentDirectory( umDir );
 		if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 			return;
 		}
@@ -317,13 +365,25 @@ public class Teste extends JFrame {
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-				clickOnLoad();
+					clickOnLoad();
 				} catch( Exception ex ) {
 					
 				}
 			}
 		});
 		mnFile.add(mntmOpen);
+		
+		JMenuItem mntmSave = new JMenuItem("Save...");
+		mntmSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					clickSave();
+				} catch (Exception ex ) {
+					
+				}
+			}
+		});
+		mnFile.add(mntmSave);
 		
 		JMenu mnImagens = new JMenu("Imagens");
 		menuBar.add(mnImagens);
