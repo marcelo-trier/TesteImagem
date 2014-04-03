@@ -60,7 +60,7 @@ public class Teste extends JFrame {
 				pixel = rIn.getPixel( w, h, pixel );
 
 				// caso o pixel for qualquer coisa diferente de preto, faz próxima interação
-				if( pixel[0]!=0 || pixel[1]!=0 || pixel[2]!=0 )
+				if( pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0 )
 					continue;
 
 				//se for preto, faz os cálculos...
@@ -114,45 +114,6 @@ public class Teste extends JFrame {
 		return imgOut;
 	}
 
-	
-	
-/*
-	public BufferedImage doRotate(BufferedImage input, int angle) {
-    int width = input.getWidth();
-    int height = input.getHeight();
-
-
-    double radians = Math.toRadians(angle / 10.0);
-
-    // Rotate about the input image's centre
-    AffineTransform rotate = AffineTransform.getRotateInstance(radians, width / 2.0, height / 2.0);
-
-    Shape rect = new Rectangle(width, height);
-
-    // Work out how big the rotated image would be..
-    Rectangle bounds = rotate.createTransformedShape(rect).getBounds();
-
-    // Shift the rotated image into the centre of the new bounds
-    rotate.preConcatenate(
-            AffineTransform.getTranslateInstance((bounds.width - width) / 2.0, (bounds.height - height) / 2.0));
-
-    BufferedImage output = new BufferedImage(bounds.width, bounds.height, input.getType());
-    Graphics2D g2d = (Graphics2D) output.getGraphics();
-
-    // Fill the background with white
-    g2d.setColor(Color.WHITE);
-    g2d.fill(new Rectangle(width, height));
-
-    RenderingHints hints = new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-    hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-    g2d.setRenderingHints(hints);
-    g2d.drawImage(input, rotate, null);
-
-    return output;
-}
- * 	
- */
 
 	public void processaPixels( PixelManager pxm ) {
 		BufferedImage imgIn = getImage();
@@ -211,7 +172,6 @@ public class Teste extends JFrame {
 		TelaInterna interno = new TelaInterna( imgOut );
 		contentPane.add( interno );
 		interno.setVisible( true );		
-		
 	}
 	
 	
