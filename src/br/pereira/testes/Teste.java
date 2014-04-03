@@ -59,131 +59,42 @@ public class Teste extends JFrame {
 		aa++;
 	}
 	
-	public void clickRotate() {
-		String aa = JOptionPane.showInputDialog( "Digite angulo" );
-		int angulo = Integer.parseInt( aa );
-
-		BufferedImage imgOut = rotate( this.getImage(), angulo );
-
+	public void mostraImagem( BufferedImage imgOut ) {
 		TelaInterna interno = new TelaInterna( imgOut );
 		contentPane.add( interno );
 		interno.setVisible( true );	
 	}
-
-	public BufferedImage rotate( BufferedImage imgIn, int ang ) {
-		int w = imgIn.getWidth();
-		int h = imgIn.getHeight();
-		double radiano = Math.toRadians( ang );
 	
-		// Rotate about the input image's centre
-	    AffineTransform transforma = AffineTransform.getRotateInstance( radiano, w/2, h/2 );
-	    Shape retang = new Rectangle( w, h );
+	public void clickRotate() {
+		String aa = JOptionPane.showInputDialog( "Digite angulo" );
+		int angulo = Integer.parseInt( aa );
 
-	    // Work out how big the rotated image would be..
-	    Rectangle redimens = transforma.createTransformedShape( retang ).getBounds();
-	    
-	    int novoW = redimens.width;
-	    int novoH = redimens.height;
-
-	    AffineTransform reposiciona = AffineTransform.getTranslateInstance( (novoW-w)/2, (novoH-h)/2 );
-	    transforma.preConcatenate( reposiciona );
-	    
-	    
-		BufferedImage imgOut = new BufferedImage( novoW, novoH, imgIn.getType() );
-		Graphics2D gOut = imgOut.createGraphics();
-		gOut.setColor( Color.WHITE );
-		gOut.fillRect( 0, 0, novoW, novoH );
-	    //gOut.rotate( radiano, novoW/2, novoH/2 );
-	    //gOut.drawImage( imgIn, null, 0, 0 );
-		gOut.drawImage( imgIn,transforma, null );
-
-		return imgOut;
-	}
-
-
-	public void processaPixels(  ) {
-		BufferedImage imgIn = getImage();
-		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
-		Raster  rIn = imgIn.getRaster();
-		WritableRaster rOut = imgOut.getRaster();
+		Rotaciona rotate = new Rotaciona( getImage() );
+		rotate.setAngulo( angulo );
+		rotate.execute();
+		BufferedImage imgOut = rotate.getImage();
 		
-		int pixel[] = new int[ rIn.getNumBands() ];
+//		BufferedImage imgOut = rotate( getImage(), angulo );
 
-		for( int h=0; h<imgIn.getHeight(); h++ ) {
-			for( int w=0; w<imgIn.getWidth(); w++ ) {
-//				pxm.execute();
-/*
-				pixel = rIn.getPixel( w, h, pixel );
-				int media = (pixel[0]+pixel[1]+pixel[2])/3;
-				int cor = 0;
-				if( media > limite ) {
-					cor = 0xFF;
-				}
-				pixel[0] = pixel[1] = pixel[2] = cor;
-					
-				rOut.setPixel( w, h, pixel ); */
-			}
-		}
-		TelaInterna interno = new TelaInterna( imgOut );
-		contentPane.add( interno );
-		interno.setVisible( true );		
+		mostraImagem( imgOut );
+		
 	}
-	
+
 	public void clickLimiar() {
 		String aa = JOptionPane.showInputDialog( "Digite limiar" );
 		int limite = Integer.parseInt( aa );
 
-		BufferedImage imgIn = getImage();
-		//BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), BufferedImage.TYPE_INT_RGB );
-		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
-		Raster  rIn = imgIn.getRaster();
-		WritableRaster rOut = imgOut.getRaster();
-		
-		int pixel[] = new int[ rIn.getNumBands() ];
-
-		for( int h=0; h<imgIn.getHeight(); h++ ) {
-			for( int w=0; w<imgIn.getWidth(); w++ ) {
-
-				pixel = rIn.getPixel( w, h, pixel );
-				int media = (pixel[0]+pixel[1]+pixel[2])/3;
-				int cor = 0;
-				if( media > limite ) {
-					cor = 0xFF;
-				}
-				pixel[0] = pixel[1] = pixel[2] = cor;
-					
-				rOut.setPixel( w, h, pixel );
-			}
-		}
-		TelaInterna interno = new TelaInterna( imgOut );
-		contentPane.add( interno );
-		interno.setVisible( true );		
+		Limiarizacao limiar = new Limiarizacao( getImage() );
+		limiar.setLimite( limite );
+		limiar.execute();
+		BufferedImage imgOut = limiar.getImage();
+		this.mostraImagem( imgOut );
 	}
 	
-	
 	public void clickGrayScale() {
-		BufferedImage imgIn = getImage();
-		//BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), BufferedImage.TYPE_INT_RGB );
-		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
-		Raster  rIn = imgIn.getRaster();
-		WritableRaster rOut = imgOut.getRaster();
-		
-		int pixel[] = new int[ rIn.getNumBands() ];
-
-		for( int h=0; h<imgIn.getHeight(); h++ ) {
-			for( int w=0; w<imgIn.getWidth(); w++ ) {
-
-				pixel = rIn.getPixel( w, h, pixel );
-				int media = (pixel[0]+pixel[1]+pixel[2])/3;
-				pixel[0] = media;
-				pixel[1] = media;
-				pixel[2] = media;
-				rOut.setPixel( w, h, pixel );
-			}
-		}
-		TelaInterna interno = new TelaInterna( imgOut );
-		contentPane.add( interno );
-		interno.setVisible( true );		
+		EscalaCinza cinza = new EscalaCinza( getImage() );
+		cinza.execute();
+		mostraImagem( cinza.getImage() );
 	}
 	
 	public BufferedImage getImage() {
@@ -195,65 +106,16 @@ public class Teste extends JFrame {
 	}	
 	
 	public void clickEscurece() {
-
-		BufferedImage imgIn = getImage();
-		//BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), BufferedImage.TYPE_INT_RGB );
-		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
-		Raster  rIn = imgIn.getRaster();
-		WritableRaster rOut = imgOut.getRaster();
-		
-		int pixel[] = new int[ rIn.getNumBands() ];
-
-		for( int h=0; h<imgIn.getHeight(); h++ ) {
-			for( int w=0; w<imgIn.getWidth(); w++ ) {
-
-				pixel = rIn.getPixel( w, h, pixel );
-				pixel[0] = 0xFF - pixel[0];
-				pixel[1] = 0xFF - pixel[1];
-				pixel[2] = 0xFF - pixel[2];
-				rOut.setPixel( w, h, pixel );
-			}
-		}
-		TelaInterna interno = new TelaInterna( imgOut );
-		contentPane.add( interno );
-		interno.setVisible( true );		
+		Negativo neg = new Negativo( getImage() );
+		neg.execute();
+		mostraImagem( neg.getImage() );
 	}		
 
 	
 	public void calculeBrancos( BufferedImage aImagem ) {
 		CalculePontos brancos = new CalculePontos( getImage() );
-		
-	}
-	
-	public void calculeBrancos222( BufferedImage aImagem ) {
-		Raster raster = aImagem.getRaster();
-		int numeroBandas = raster.getNumBands();
-		int pix[] = new int[ numeroBandas ];
-		
-		int w = aImagem.getWidth();
-		int h = aImagem.getHeight();
-		short r = 0, g=0, b=0;
-
-		int brancos=0, pretos=0, outros=0;
-		for( int x=0; x<w; x++ ) {
-			for( int y=0; y<h; y++ ) {
-				pix = raster.getPixel(x, y, pix );
-				if( pix[ 0 ]==255 && pix[ 1 ]==255 && pix[ 2 ]==255 ) {
-					brancos++;
-				}
-				else if( pix[ 0 ]==0 && pix[1]==0 && pix[2]==0 ) {
-					pretos++;
-				}
-				else
-					outros++;
-			}
-		}
-		int tot = brancos + pretos + outros;
-		String msg = "tot = " + tot;
-		msg += "\nbrancos = " + brancos;
-		msg += "\npretos = " + pretos;
-		msg += "\noutros = " + outros;
-		JOptionPane.showMessageDialog( this, msg );
+		brancos.execute();
+		JOptionPane.showMessageDialog( this, brancos );
 	}
 	
 	public void testeClick() {

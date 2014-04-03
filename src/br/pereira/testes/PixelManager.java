@@ -5,9 +5,9 @@ import java.awt.image.Raster;
 
 public abstract class PixelManager {
 
-	BufferedImage _img;
-	Raster _raster;
-	int[] _pix;
+	protected BufferedImage _img;
+	protected Raster _raster;
+	protected int[] _pix;
 
 	public PixelManager( BufferedImage i ) {
 		_img = i;
