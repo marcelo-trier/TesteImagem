@@ -8,7 +8,7 @@ public abstract class PixelManager {
 	protected BufferedImage _img;
 	protected Raster _raster;
 	protected int[] _pix;
-
+	
 	public PixelManager( BufferedImage i ) {
 		_img = i;
 	}
@@ -21,13 +21,19 @@ public abstract class PixelManager {
 		int w = _img.getWidth();
 		int h = _img.getHeight();
 
-		for( int x=0; x<w; x++ ) {
-			for( int y=0; y<h; y++ ) {
+		int x, y;
+		try {
+		for( y=0; y<h; y++ ) {
+			for( x=0; x<w; x++ ) {
 				_pix = _raster.getPixel(x, y, _pix );
 				pixelLoop( x, y );
 			}
 		}
 		
+		} catch( Exception ex ) {
+			int aa = 0;
+			aa++;
+		}
 	}
 	
 	public abstract void pixelLoop( int x, int y );

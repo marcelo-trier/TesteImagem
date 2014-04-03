@@ -31,32 +31,10 @@ public class Teste extends JFrame {
 	private JDesktopPane contentPane;
 
 	public void clickVerifiqueRotacao() {
-		BufferedImage imgIn = getImage();
-		
-		int lateral[] = new int[imgIn.getHeight()];
-		int abaixo[] = new int[imgIn.getWidth()];
-		Arrays.fill( lateral, 0 );
-		Arrays.fill( abaixo,  0 );
-		
-		Raster  rIn = imgIn.getRaster();
-		int pixel[] = new int[ rIn.getNumBands() ];
-
-		for( int h=0; h<imgIn.getHeight(); h++ ) {
-			for( int w=0; w<imgIn.getWidth(); w++ ) {
-				pixel = rIn.getPixel( w, h, pixel );
-
-				// caso o pixel for qualquer coisa diferente de preto, faz próxima interação
-				if( pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0 )
-					continue;
-
-				//se for preto, faz os cálculos...
-				lateral[ h ] = lateral[ h ] + 1;
-				abaixo[ w ] = abaixo[ w ] + 1;
-			}
-		}
-		int aa;
-		aa = 0;
-		aa++;
+		VerifiqueRotacao vr = new VerifiqueRotacao( getImage() );
+		vr.execute();
+		JOptionPane.showMessageDialog( this, vr );
+		//mostraImagem( vr.getImage() );
 	}
 	
 	public void mostraImagem( BufferedImage imgOut ) {

@@ -44,8 +44,6 @@ public class Rotaciona extends PixelManager {
 		Graphics2D gOut = _outImg.createGraphics();
 		gOut.setColor( Color.WHITE );
 		gOut.fillRect( 0, 0, novoW, novoH );
-	    //gOut.rotate( radiano, novoW/2, novoH/2 );
-	    //gOut.drawImage( imgIn, null, 0, 0 );
 		gOut.drawImage( _img,transforma, null );
 	}
 	
