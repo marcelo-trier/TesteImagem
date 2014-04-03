@@ -1,15 +1,9 @@
 package br.pereira.testes;
 
-import javax.imageio.ImageIO;
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
+import javax.swing.JInternalFrame;
 
 public class TelaInterna extends JInternalFrame {
 	static int contadorJanela = 0;

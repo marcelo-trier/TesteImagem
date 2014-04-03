@@ -9,7 +9,6 @@ import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
@@ -30,19 +29,6 @@ import javax.swing.border.EmptyBorder;
 public class Teste extends JFrame {
 
 	private JDesktopPane contentPane;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Teste frame = new Teste();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public void clickVerifiqueRotacao() {
 		BufferedImage imgIn = getImage();
@@ -233,17 +219,13 @@ public class Teste extends JFrame {
 		interno.setVisible( true );		
 	}		
 
-	/*
-		 *     BufferedImage output = new BufferedImage(bounds.width, bounds.height, input.getType());
-    Graphics2D g2d = (Graphics2D) output.getGraphics();
-
-    // Fill the background with white
-    g2d.setColor(Color.WHITE);
-    g2d.fill(new Rectangle(width, height));
-
-		 */
 	
 	public void calculeBrancos( BufferedImage aImagem ) {
+		CalculePontos brancos = new CalculePontos( getImage() );
+		
+	}
+	
+	public void calculeBrancos222( BufferedImage aImagem ) {
 		Raster raster = aImagem.getRaster();
 		int numeroBandas = raster.getNumBands();
 		int pix[] = new int[ numeroBandas ];
@@ -278,34 +260,6 @@ public class Teste extends JFrame {
 		calculeBrancos( getImage() );
 	}
 	
-	public void clickOnLoad3333() throws Exception {
-		JFileChooser fileChooser = new JFileChooser();
-		if (fileChooser.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-			return;
-		}
-		File file = fileChooser.getSelectedFile();
-		BufferedImage aImagem = ImageIO.read( file );
-		//Raster raster = aImagem.getData();
-		Raster raster = aImagem.getRaster();
-		int numeroBandas = raster.getNumBands();
-		int pix[] = new int[ numeroBandas ];
-		
-		int w = aImagem.getWidth();
-		int h = aImagem.getHeight();
-		short r = 0, g=0, b=0;
-		long aa = 0;
-
-		
-		for( int x=0; x<w; x++ ) {
-			for( int y=0; y<h; y++ ) {
-				pix = raster.getPixel(x, y, pix );
-				if( pix[ 0 ] != 0xFF )
-					aa++;
-			}
-			aa++;
-		}
-	}
-
 	
 	public void clickSave() throws IOException {
 		JFileChooser fileChooser = new JFileChooser();

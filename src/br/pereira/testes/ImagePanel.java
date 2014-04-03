@@ -3,8 +3,8 @@ package br.pereira.testes;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class ImagePanel extends JPanel {
 
