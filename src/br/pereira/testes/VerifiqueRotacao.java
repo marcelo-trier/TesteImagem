@@ -66,9 +66,26 @@ public class VerifiqueRotacao extends PixelManager {
 	}
 	
 	public void execute() {
-		int[] angulos = { 0, 15, -15, 30, -30, 50, -50 };
+//		int[] angulos = { 0, 15, -15, 30, -30, 50, -50 };
+		int[] angulos = new int[ 181 ];
+		angulos[0] = 0;
+		int cont = 1;
+		for(int i=1; i<181; i++ )
+		{
+			int valor;
+			// todo numero par soma um no cont
+			if( i % 2  == 1 ) {
+				valor = cont;
+			}
+			else {
+				valor = 0 - cont;
+				cont++;
+			}
+			angulos[ i ] = valor;
+		}
+		
 		int total = angulos.length;
-		for( int i=0; i<3; i++ ) {
+		for( int i=0; i<total; i++ ) {
 			Rotaciona rotate = new Rotaciona( _original );
 			rotate.setAngulo( angulos[ i ] );
 			rotate.execute();

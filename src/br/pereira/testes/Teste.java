@@ -34,7 +34,7 @@ public class Teste extends JFrame {
 		VerifiqueRotacao vr = new VerifiqueRotacao( getImage() );
 		vr.execute();
 		JOptionPane.showMessageDialog( this, vr );
-		//mostraImagem( vr.getImage() );
+		mostraImagem( vr.getImage() );
 	}
 	
 	public void mostraImagem( BufferedImage imgOut ) {
