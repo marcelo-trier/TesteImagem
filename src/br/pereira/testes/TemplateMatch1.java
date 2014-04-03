@@ -13,7 +13,7 @@ public class TemplateMatch1 {
 	
 	public static void main( String[] args ){
 						
-	       // Cria vetores de características	       
+	       // Cria vetores de caracterï¿½sticas	       
 	       int [][] crt1 = { 
 	    		   { 255, 255, 255 }, 
 	    		   { 255, 000, 000 }, 
@@ -21,9 +21,9 @@ public class TemplateMatch1 {
 	       };
 	       
 	       int [][] crt2 = { 
-	    		   { 255, 255, 255 }, 
 	    		   { 255, 000, 255 }, 
 	    		   { 255, 000, 000 }, 
+	    		   { 255, 255, 255 }, 
 	       };
 	       
 	       int [][] crt3 = { 
@@ -70,15 +70,15 @@ public class TemplateMatch1 {
 	       int tem_crt6 = 0;
 	       int tem_crt7 = 0;
 	       int tem_crt8 = 0;
-	       // Inicia a Leitura do número
+	       // Inicia a Leitura do nï¿½mero
 	        BufferedImage numeroLido = null;
 	        try {
                 
 	            File imagefileN3 = new File("C:/Users/ecacarva/Documents/GitHub/TesteImagem/numeros-bmp/num-8.bmp");
 	            numeroLido = ImageIO.read(imagefileN3);
 	            // Confirma se leu os numeros
-	            //System.out.println("Success para número");
-	            //Mostra informações
+	            //System.out.println("Success para nï¿½mero");
+	            //Mostra informaï¿½ï¿½es
 	            //System.out.println("Elemento Lido: "+numeroLido);
 	            // System.out.println("Matriz de largura "+numeroLido.getWidth() + " e altura "+numeroLido.getHeight());
 	            

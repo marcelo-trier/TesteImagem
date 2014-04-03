@@ -30,11 +30,21 @@ public class Teste extends JFrame {
 
 	private JDesktopPane contentPane;
 
+	public void clickMatching() {
+		TemplateMatchOO tm = new TemplateMatchOO( getImage() );
+		tm.execute();
+		JOptionPane.showMessageDialog( this, tm );
+	}
+	
+	
 	public void clickVerifiqueRotacao() {
 		VerifiqueRotacao vr = new VerifiqueRotacao( getImage() );
 		vr.execute();
 		JOptionPane.showMessageDialog( this, vr );
 		mostraImagem( vr.getImage() );
+		
+		TemplateMatch1 tm = new TemplateMatch1();
+		
 	}
 	
 	public void mostraImagem( BufferedImage imgOut ) {
@@ -222,6 +232,14 @@ public class Teste extends JFrame {
 			}
 		});
 		mnProcessamento.add(mntmVerifiqueRotao);
+		
+		JMenuItem mntmVerifiqueMatching = new JMenuItem("Verifique Matching");
+		mntmVerifiqueMatching.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clickMatching();
+			}
+		});
+		mnProcessamento.add(mntmVerifiqueMatching);
 		contentPane = new JDesktopPane();
 		contentPane.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

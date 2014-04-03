@@ -10,14 +10,18 @@ public abstract class PixelManager {
 	protected int[] _pix;
 	
 	public PixelManager( BufferedImage i ) {
-		_img = i;
+		setImg( i );
 	}
 
-	public void execute() {
+	public void setImg( BufferedImage novaImg ) {
+		_img = novaImg;
 		_raster = _img.getRaster();
 		int numeroBandas = _raster.getNumBands();
 		_pix = new int[ numeroBandas ];
-		
+	}
+	
+	
+	public void execute() {
 		int w = _img.getWidth();
 		int h = _img.getHeight();
 

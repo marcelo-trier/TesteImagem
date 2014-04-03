@@ -27,32 +27,6 @@ public class VerifiqueRotacao extends PixelManager {
 		
 		_original = i;
 	}
-	
-	/*
-	BufferedImage imgIn = getImage();
-	
-	int lateral[] = new int[imgIn.getHeight()];
-	int abaixo[] = new int[imgIn.getWidth()];
-	Arrays.fill( lateral, 0 );
-	Arrays.fill( abaixo,  0 );
-	
-	Raster  rIn = imgIn.getRaster();
-	int pixel[] = new int[ rIn.getNumBands() ];
-
-	for( int h=0; h<imgIn.getHeight(); h++ ) {
-		for( int w=0; w<imgIn.getWidth(); w++ ) {
-			pixel = rIn.getPixel( w, h, pixel );
-
-			// caso o pixel for qualquer coisa diferente de preto, faz próxima interação
-			if( pixel[0] != 0 || pixel[1] != 0 || pixel[2] != 0 )
-				continue;
-
-			//se for preto, faz os cálculos...
-			lateral[ h ] = lateral[ h ] + 1;
-			abaixo[ w ] = abaixo[ w ] + 1;
-		}
-	}
-	*/	
 
 	// pega img base
 	// ang rotacao
@@ -89,7 +63,8 @@ public class VerifiqueRotacao extends PixelManager {
 			Rotaciona rotate = new Rotaciona( _original );
 			rotate.setAngulo( angulos[ i ] );
 			rotate.execute();
-			_img = rotate.getImage();		
+			setImg( rotate.getImage() );
+			//_img = rotate.getImage();		
 
 			reiniciaVariaveis();
 			super.execute();
@@ -103,9 +78,6 @@ public class VerifiqueRotacao extends PixelManager {
 			maiores.add( a );
 		}
 		Collections.sort( maiores );
-//		Aposta ap = maiores.get( maiores.size() -1 );
-//		_outImg = ap._img;
-
 	}
 	
 	public int getNumeroElementos( int[] arr ) {
