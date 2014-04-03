@@ -115,7 +115,7 @@ public class Teste extends JFrame {
 	}
 
 
-	public void processaPixels( PixelManager pxm ) {
+	public void processaPixels(  ) {
 		BufferedImage imgIn = getImage();
 		BufferedImage imgOut = new BufferedImage(imgIn.getWidth(), imgIn.getHeight(), imgIn.getType() );
 		Raster  rIn = imgIn.getRaster();
@@ -125,7 +125,7 @@ public class Teste extends JFrame {
 
 		for( int h=0; h<imgIn.getHeight(); h++ ) {
 			for( int w=0; w<imgIn.getWidth(); w++ ) {
-				pxm.execute();
+//				pxm.execute();
 /*
 				pixel = rIn.getPixel( w, h, pixel );
 				int media = (pixel[0]+pixel[1]+pixel[2])/3;
